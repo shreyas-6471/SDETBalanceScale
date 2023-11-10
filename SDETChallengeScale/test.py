@@ -55,7 +55,6 @@ def perform_search(driver, start, end):
 def select_fake_bar(driver, bar_number):
     """Selects the fake bar and handles the alert."""
     button_xpath = f"//button[text()='{bar_number}']"
-    #print("Xpath is",button_xpath)
     time.sleep(10)
     driver.find_element(By.XPATH, button_xpath).click()
     time.sleep(10) 
