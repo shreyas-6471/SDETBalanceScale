@@ -8,11 +8,8 @@ To execute this script, the following prerequisites should be downloaded and set
 Python: The script is in Python, hence Python should be downloaded and installed on your system. It is available at python.org.
 
 Selenium WebDriver: Selenium is essential for web automation. It should be downloaded via pip with the command:
-
-
 pip install selenium
 WebDriver for Firefox: Since the script operates with Firefox, the geckodriver, which enables Selenium to interact with Firefox, should be downloaded. It is obtainable from Mozilla's GitHub repository. Ensure it's included in your system's PATH.
-
 Execution Instructions
 Script Download: Save the provided Python script to a local directory.
 
@@ -29,9 +26,7 @@ The script automates the process to solve a weight comparison challenge on a web
 
 Core Functions
 fill_board: Inputs values into the webpage's text fields once they become accessible.
-
 weigh_bars: Sets up and performs a weight comparison between two sets of items, resets the current configuration, and initiates the weighing process.
-
 perform_search: A recursive function employing a divide-and-conquer approach to pinpoint the counterfeit bar by segmenting the set of bars, comparing their weights, and refining the search based on these comparisons.
 
 Execution Flow
