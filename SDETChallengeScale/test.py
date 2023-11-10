@@ -5,7 +5,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoAlertPresentException
 import time
 counter=1
-weighings_list=[]
 def setup_driver():
     """Sets up the Selenium WebDriver."""
     driver = webdriver.Firefox()
@@ -33,7 +32,6 @@ def weigh_bars(driver, left_values, right_values):
     )
     counter=counter+1
     last_li_element = driver.find_elements(By.XPATH, "//li")[-1]
-    weighings_list.append(last_li_element.text)
     return last_li_element.text
 
 def perform_search(driver, start, end):
@@ -70,16 +68,23 @@ def select_fake_bar(driver, bar_number):
         alert.accept()
     except NoAlertPresentException:
         assert False, "No alert was present."
-
+def get_weigh_bars(driver):
+    global counter
+    WebDriverWait(driver, 20).until(
+        lambda d: len(d.find_elements(By.XPATH, "//li")) >= (counter-1)
+    )
+    li_list=driver.find_elements(By.XPATH, "//li")
+    return li_list
 def main():
     """Main function to execute the counterfeit bar finding process."""
     driver = setup_driver()
     fake_bar_number = perform_search(driver, 0, 8)
     print(f"Fake bar is number: {fake_bar_number}")
-    print("Number of Weighings is",len(weighings_list))
+    li_list=get_weigh_bars(driver)
+    print("Number of Weighings is",len(li_list))
     print("Weighings are")
-    for weighing in weighings_list:
-        print(weighing)
+    for weighing in li_list:
+        print(weighing.text)
     driver.quit()
 
 if __name__ == "__main__":
