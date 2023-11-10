@@ -15,7 +15,7 @@ Script Download: Save the provided Python script to a local directory.
 
 WebDriver Setup: Ensure the geckodriver is positioned in a directory that is part of your system's PATH.
 
-Script Execution: Open a command line interface, navigate to where the script is saved, and execute:
+Script Execution: Open a command line interface, navigate to where the script is saved and get into the venv by sourcing and then execute:
 
 python [script_name].py
 Here, [script_name] should be replaced with the actual file name of your script.
