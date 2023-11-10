@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoAlertPresentException
 import time
 counter=1
 def setup_driver():
@@ -52,15 +53,22 @@ def perform_search(driver, start, end):
     else:
         return perform_search(driver, start + third, start + 2 * third - 1)
 
+
 def select_fake_bar(driver, bar_number):
-    """Selects the fake bar and handles the alert."""
+    """Selects the fake bar and asserts if the correct alert is present."""
     button_xpath = f"//button[text()='{bar_number}']"
     time.sleep(10)
     driver.find_element(By.XPATH, button_xpath).click()
-    time.sleep(10) 
-    WebDriverWait(driver, 10).until(EC.alert_is_present())
-    alert = driver.switch_to.alert
-    alert.accept()
+    time.sleep(10)
+    try:
+        WebDriverWait(driver, 10).until(EC.alert_is_present())
+        alert = driver.switch_to.alert
+        alert_text = alert.text
+        assert "Yay! You find it!" in alert_text, "Alert text does not match expected text."
+        print("Correct alert found and assertion passed.")
+        alert.accept()
+    except NoAlertPresentException:
+        assert False, "No alert was present."
 
 def main():
     """Main function to execute the counterfeit bar finding process."""
