@@ -15,7 +15,7 @@ Script Download: Save the provided Python script to a local directory.
 
 WebDriver Setup: Ensure the geckodriver is positioned in a directory that is part of your system's PATH.
 
-Script Execution: Open a command line interface, navigate to where the script is saved, and execute:
+Script Execution: Open a command line interface, navigate to where the script is saved and get into the venv by sourcing and then execute:
 
 python [script_name].py
 Here, [script_name] should be replaced with the actual file name of your script.
@@ -29,8 +29,9 @@ fill_board: Inputs values into the webpage's text fields once they become access
 weigh_bars: Sets up and performs a weight comparison between two sets of items, resets the current configuration, and initiates the weighing process.
 perform_search: A recursive function employing a divide-and-conquer approach to pinpoint the counterfeit bar by segmenting the set of bars, comparing their weights, and refining the search based on these comparisons.
 
-Execution Flow
-Initiation through perform_search with a preliminary range of bars.
-Utilization of weigh_bars for weight comparisons and fill_board for scale preparation.
-Recursive narrowing of the search area following the outcome of each weight comparison.
-Selection of the counterfeit bar on the website and termination of the browser session.
+Execution Flow::
+Initiation through perform_search with a preliminary range of bars(in our case it's between 0-8) since we have gold bars labelled 0-8.
+weigh_bars function is called  for weight comparisons and fill_board for scale preparation.
+Based on the results from weigh_bars Recursive narrowing of the search area following the outcome of each weight comparison is done.
+The recursion is carried out, and whenever start==end,ie we have only one bar in the search space we would have found the fake bar.
+After the fake bar is found, the button is clicked and Alert will be shown on the screen
