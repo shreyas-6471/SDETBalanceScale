@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoAlertPresentException
 import time
 counter=1
+weighings_list=[]
 def setup_driver():
     """Sets up the Selenium WebDriver."""
     driver = webdriver.Firefox()
@@ -32,6 +33,7 @@ def weigh_bars(driver, left_values, right_values):
     )
     counter=counter+1
     last_li_element = driver.find_elements(By.XPATH, "//li")[-1]
+    weighings_list.append(last_li_element.text)
     return last_li_element.text
 
 def perform_search(driver, start, end):
@@ -44,8 +46,6 @@ def perform_search(driver, start, end):
     third = num_bars // 3
     result = weigh_bars(driver, list(range(start, start + third)),
                         list(range(start + third, start + 2 * third)))
-    print("Result is",result)
-
     if "=" in result:
         return perform_search(driver, start + 2 * third, end)
     elif "<" in result:
@@ -65,6 +65,7 @@ def select_fake_bar(driver, bar_number):
         alert = driver.switch_to.alert
         alert_text = alert.text
         assert "Yay! You find it!" in alert_text, "Alert text does not match expected text."
+        print("Alert Text is",alert_text)
         print("Correct alert found and assertion passed.")
         alert.accept()
     except NoAlertPresentException:
@@ -75,6 +76,10 @@ def main():
     driver = setup_driver()
     fake_bar_number = perform_search(driver, 0, 8)
     print(f"Fake bar is number: {fake_bar_number}")
+    print("Number of Weighings is",len(weighings_list))
+    print("Weighings are")
+    for weighing in weighings_list:
+        print(weighing)
     driver.quit()
 
 if __name__ == "__main__":
